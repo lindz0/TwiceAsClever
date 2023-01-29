@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <script src="seedrandom.js"></script>
+    </head>
+    <body>
+        <img id="backgroundImg" src="TwiceAsCleverChallenge1.png" style="position: relative;"/>
+        <canvas id="myCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
+        
+        <script>
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+const shuffleArray = array => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
+function printGrey(context, arr, row, color)
+{
+    ctx.fillStyle = color;
+    shuffleArray(arr)
+    for (let i = 0; i < arr.length; i++) {
+        ctx.fillText(arr[i], 40 + i * 41, 388 + (row-1) * 40);
+    }
+}
+
+function printYellow(context, arr)
+{
+    ctx.fillStyle = 'black';
+    shuffleArray(arr)
+    for (let i = 0; i < arr.length; i++) {
+        ctx.fillText(arr[i], 405 + i % 3 * 49, 350 + Math.floor(i / 3) * 49);
+    }
+}
+
+function printYellowCircles(context)
+{
+    var circles = [];
+    for (let i = 0; i < 4; i++) {
+        var number = getRandomInt(0, 11);
+        while(circles.includes(number))
+        {
+            number = getRandomInt(0, 11);
+        }
+        circles.push(number);
+    }
+    for (let i = 0; i < circles.length; i++) {
+        console.log(Math.floor(circles[i] / 3));
+        ctx.beginPath();
+        ctx.arc(410 + circles[i] % 3 * 49, 342 + Math.floor(circles[i] / 3) * 49, 18, 0 , 2 * Math.PI);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    }
+}
+
+function printGreen(context, arr)
+{
+    ctx.font = "20px Arial";
+    ctx.fillStyle = 'LightGray';
+    shuffleArray(arr);
+    for (let i = 0; i < arr.length; i++) {
+        ctx.fillText('x' + arr[i], 53 + i * 45, 718);
+    }
+}
+
+function printPink(context, arr)
+{
+    ctx.font = "20px Arial";
+    ctx.fillStyle = 'Gainsboro';
+    shuffleArray(arr);
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i] !== 0)
+        {
+            ctx.fillText('\u2265' + arr[i], 53 + i * 45, 790);
+        }
+    }
+}
+
+var canvas = document.getElementById("myCanvas");
+canvas.width = 589;
+canvas.height = 915;
+var ctx = canvas.getContext("2d");
+ctx.font = "30px Arial";
+
+var pinkNumbers = [2, 3, 4, 0, 5, 4, 3, 2, 0, 3, 4, 5]
+printPink(ctx, pinkNumbers);
+
+var greenNumbers = [2,2,2,1,3,3,3,2,3,1,4,1]
+printGreen(ctx, greenNumbers);
+
+var yellowNumbers = [1,2,3,4,5,6,1,2,3,4,5,6]
+printYellow(ctx, yellowNumbers);
+printYellowCircles(ctx);
+
+var greyNumbers = ['?',1,2,3,4,5,6]
+printGrey(ctx, greyNumbers, 1, 'DarkOrange');
+printGrey(ctx, greyNumbers, 2, 'blue');
+printGrey(ctx, greyNumbers, 3, 'green');
+printGrey(ctx, greyNumbers, 4, 'HotPink');
+
+        </script>
+        
+    </body>
+</html>
+<script>
+
+
+
+</script>
