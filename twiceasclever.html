@@ -7,16 +7,18 @@
         <canvas id="myCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
         
         <script>
+var seed = 'Patrik';
+var randomGen = new Math.seedrandom(seed);
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  return Math.floor(randomGen() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
 const shuffleArray = array => {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(randomGen() * (i + 1));
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
@@ -53,7 +55,6 @@ function printYellowCircles(context)
         circles.push(number);
     }
     for (let i = 0; i < circles.length; i++) {
-        console.log(Math.floor(circles[i] / 3));
         ctx.beginPath();
         ctx.arc(410 + circles[i] % 3 * 49, 342 + Math.floor(circles[i] / 3) * 49, 18, 0 , 2 * Math.PI);
         ctx.lineWidth = 2;
@@ -85,6 +86,13 @@ function printPink(context, arr)
     }
 }
 
+function printSeed(ctx)
+{
+    ctx.font = "14px Arial";
+    ctx.fillStyle = 'DimGray';
+    ctx.fillText('Seed: ' + seed, 470, 30);
+}
+
 var canvas = document.getElementById("myCanvas");
 canvas.width = 589;
 canvas.height = 915;
@@ -106,6 +114,8 @@ printGrey(ctx, greyNumbers, 1, 'DarkOrange');
 printGrey(ctx, greyNumbers, 2, 'blue');
 printGrey(ctx, greyNumbers, 3, 'green');
 printGrey(ctx, greyNumbers, 4, 'HotPink');
+
+printSeed(ctx);
 
         </script>
         
