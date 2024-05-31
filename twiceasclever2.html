@@ -1,12 +1,37 @@
 <html>
+    <style>
+        body {
+            height: 180mm;
+            width: 287mm;
+            margin: 0;
+        }
+        #backgroundImg, #backgroundImg2 {
+            height: 100%;
+            width: auto;
+            position: relative;
+        }
+        #myCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #myCanvas2 {
+            position: absolute;
+            top: 0;
+            left: 400;
+        }
+    </style>
     <head>
         <script src="seedrandom.js"></script>
     </head>
     <body>
-        <img id="backgroundImg" src="TwiceAsCleverChallenge1.png" style="position: relative;"/>
-        <canvas id="myCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
+        <img id="backgroundImg" src="TwiceAsCleverChallenge1.png"/>
+        <canvas id="myCanvas"></canvas>
         
-        <script>
+        <img id="backgroundImg2" src="TwiceAsCleverChallenge1.png"/>
+        <!-- <canvas id="myCanvas2"></canvas> -->
+
+<script>
 var seed = 'Patrik';
 var randomGen = new Math.seedrandom(seed);
 
@@ -30,7 +55,7 @@ function printGrey(context, arr, row, color)
     ctx.fillStyle = color;
     shuffleArray(arr)
     for (let i = 0; i < arr.length; i++) {
-        ctx.fillText(arr[i], 40 + i * 41, 388 + (row-1) * 40);
+        ctx.fillText(arr[i], 24 + i * 30, 284 + (row-1) * 30);
     }
 }
 
@@ -39,7 +64,7 @@ function printYellow(context, arr)
     ctx.fillStyle = 'black';
     shuffleArray(arr)
     for (let i = 0; i < arr.length; i++) {
-        ctx.fillText(arr[i], 405 + i % 3 * 49, 350 + Math.floor(i / 3) * 49);
+        ctx.fillText(arr[i], 292 + i % 3 * 37, 254 + Math.floor(i / 3) * 37);
     }
 }
 
@@ -56,7 +81,7 @@ function printYellowCircles(context)
     }
     for (let i = 0; i < circles.length; i++) {
         ctx.beginPath();
-        ctx.arc(410 + circles[i] % 3 * 49, 342 + Math.floor(circles[i] / 3) * 49, 18, 0 , 2 * Math.PI);
+        ctx.arc(298 + circles[i] % 3 * 37, 248 + Math.floor(circles[i] / 3) * 37, 15, 0 , 2 * Math.PI);
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'black';
         ctx.stroke();
@@ -69,19 +94,18 @@ function printGreen(context, arr)
     ctx.fillStyle = 'LightGray';
     shuffleArray(arr);
     for (let i = 0; i < arr.length; i++) {
-        ctx.fillText('x' + arr[i], 53 + i * 45, 718);
+        ctx.fillText('x' + arr[i], 33 + i * 33.5, 526);
     }
 }
 
-function printPink(context, arr)
+function printPink(context, arr, startPos)
 {
-    ctx.font = "20px Arial";
-    ctx.fillStyle = 'LightGray';
-    shuffleArray(arr);
+    context.font = "20px Arial";
+    context.fillStyle = 'LightGray';
     for (let i = 0; i < arr.length; i++) {
         if(arr[i] !== 0)
         {
-            ctx.fillText('\u2265' + arr[i], 53 + i * 45, 790);
+            ctx.fillText('\u2265' + arr[i], startPos + 33 + i * 33, 580);
         }
     }
 }
@@ -90,17 +114,25 @@ function printSeed(ctx)
 {
     ctx.font = "14px Arial";
     ctx.fillStyle = 'DimGray';
-    ctx.fillText('Seed: ' + seed, 470, 30);
+    ctx.fillText('Seed: ' + seed, 290, 18);
 }
 
 var canvas = document.getElementById("myCanvas");
-canvas.width = 589;
-canvas.height = 915;
+canvas.width = 915;
+canvas.height = 589;
 var ctx = canvas.getContext("2d");
 ctx.font = "30px Arial";
 
+// var canvas2 = document.getElementById("myCanvas2");
+// canvas2.width = 915;
+// canvas2.height = 589;
+// var ctx2 = canvas.getContext("2d");
+// ctx2.font = "30px Arial";
+
 var pinkNumbers = [2, 3, 4, 0, 5, 4, 3, 2, 0, 3, 4, 5]
-printPink(ctx, pinkNumbers);
+shuffleArray(pinkNumbers);
+printPink(ctx, pinkNumbers, 0);
+// printPink(ctx2, pinkNumbers, 500);
 
 var greenNumbers = [2,2,2,1,3,3,3,2,3,1,4,1]
 printGreen(ctx, greenNumbers);
@@ -117,12 +149,21 @@ printGrey(ctx, greyNumbers, 4, 'HotPink');
 
 printSeed(ctx);
 
+var newCanvas = document.createElement("canvas");
+newCanvas.width = canvas.width;
+newCanvas.height = canvas.height;
+
+// Get the context of the new canvas
+var newCtx = newCanvas.getContext("2d");
+
+// Draw the old canvas onto the new one
+// newCtx.drawImage(canvas, 500, 0);
+newCtx.fillText('Kalle: ' + seed, 590, 18);
+
+var canvas2 = document.getElementById("myCanvas2");
+canvas2.appendChild(newCanvas);
+
         </script>
         
     </body>
 </html>
-<script>
-
-
-
-</script>
