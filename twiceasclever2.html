@@ -42,7 +42,7 @@
     <canvas id="myCanvas2"></canvas>
 
     <script>
-      var seed = "Patrik";
+      var seed = "Em2024";
       var randomGen = new Math.seedrandom(seed);
 
       function getRandomInt(min, max) {
@@ -116,6 +116,7 @@
       function printPink(context, arr, startPos) {
         context.font = "20px Arial";
         context.fillStyle = "LightGray";
+        shuffleArray(pinkNumbers);
         for (let i = 0; i < arr.length; i++) {
           if (arr[i] !== 0) {
             context.fillText("\u2265" + arr[i], startPos + 33 + i * 33, 580);
@@ -142,7 +143,6 @@
       ctx2.font = "30px Arial";
 
       var pinkNumbers = [2, 3, 4, 0, 5, 4, 3, 2, 0, 3, 4, 5];
-      shuffleArray(pinkNumbers);
       printPink(ctx, pinkNumbers, 0);
       printPink(ctx2, pinkNumbers, 0);
 
