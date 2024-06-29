@@ -58,7 +58,8 @@
       var img = new Image();
       img.src = 'icons.png';
       var imgArrX = [4, 44, 85, 127, 167, 209, 249, 287, 322, 360];
-
+      var noOfIcons = [];
+      
       let randomGen = new Math.seedrandom(
         document.getElementById("seed").value
       );
@@ -76,6 +77,14 @@
         return Math.floor(randomGen() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
       }
 
+      function addIcon(iconIndex) {
+        if (noOfIcons[iconIndex] === undefined) {
+          noOfIcons[iconIndex] = 1;
+        } else {
+          noOfIcons[iconIndex]++;
+        }
+      }
+
       function printIconX(ctx, index, iconIndex, destY, spacingX, spacingF) {
         var sourceY = 0;
         var sourceWidth = 28;
@@ -87,6 +96,7 @@
         var destX = index * (sourceWidth + spacingX) + spacingF;
 
         ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        addIcon(iconIndex);
       }
 
       function printIconY(ctx, index, iconIndex, destX, spacingY, spacingF) {
@@ -100,6 +110,7 @@
         var destY = index * (sourceHeight + spacingY) + spacingF;
 
         ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        addIcon(iconIndex);
       }
 
       const shuffleArray = (array) => {
@@ -151,8 +162,12 @@
 
       function printTurnIcons(context, arr) {
         shuffleArray(arr);
+        var backIcon = noOfIcons[1];
+        var reThrowIcon = noOfIcons[8];
+        var plusOneIcon = noOfIcons[4];
+        var noIcon = [noOfIcons[1], noOfIcons[8], noOfIcons[4]];
         for (let i = 0; i < 3; i++) {
-          printIconY(context, i, arr[i], 302, -1.7, 118)
+          printIconY(context, i, arr[i], noIcon[i] * 35 + 162, -1.7, 118)
         }
         printIconY(context, 3, arr[3], 232, -1.6, 118)
       }
@@ -272,27 +287,26 @@
         printGrey(ctx2, greyNumbers, 4, "HotPink");
 
         var greyIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        printGreyIcons(ctx, greyIcons);
-        printGreyIcons(ctx2, greyIcons);
-
         var blueIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
-        printBlueIcons(ctx, blueIcons);
-        printBlueIcons(ctx2, blueIcons);
-
         var greenIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
-        printGreenIcons(ctx, greenIcons);
-        printGreenIcons(ctx2, greenIcons);
-
         var pinkIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
-        printPinkIcons(ctx, pinkIcons);
-        printPinkIcons(ctx2, pinkIcons);
-
-        var yellowIcons = [2, 4, 5, 6, 7, 8, 9];
-        printYellowIcons(ctx, yellowIcons);
-        printYellowIcons(ctx2, yellowIcons);
-
+        var yellowIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         var turnIcons = [2, 3, 5, 6, 7];
+
+        noOfIcons = [];
+        printGreyIcons(ctx, greyIcons);
+        printBlueIcons(ctx, blueIcons);
+        printGreenIcons(ctx, greenIcons);
+        printPinkIcons(ctx, pinkIcons);
+        printYellowIcons(ctx, yellowIcons);
         printTurnIcons(ctx, turnIcons);
+
+        noOfIcons = [];
+        printGreyIcons(ctx2, greyIcons);
+        printBlueIcons(ctx2, blueIcons);
+        printGreenIcons(ctx2, greenIcons);
+        printPinkIcons(ctx2, pinkIcons);
+        printYellowIcons(ctx2, yellowIcons);
         printTurnIcons(ctx2, turnIcons);
 
         printSeed(ctx2);
