@@ -1,0 +1,320 @@
+<html>
+  <style>
+    body {
+      height: 180mm;
+      width: 287mm;
+      margin: 0;
+    }
+    #backgroundImg,
+    #backgroundImg2 {
+      height: 100%;
+      width: auto;
+      position: relative;
+    }
+    #myCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #myCanvas2 {
+      position: absolute;
+      top: 0;
+      left: 442;
+    }
+    #seed {
+      position: absolute;
+      left: 170;
+      top: 1;
+    }
+  </style>
+  <head>
+    <title>Twice as clever custom</title>
+    <script src="seedrandom.js"></script>
+  </head>
+  <body>
+    <img
+      id="backgroundImg"
+      src="TwiceAsCleverChallenge3.png"
+      alt="Twice as Clever"
+    />
+    <canvas id="myCanvas"></canvas>
+
+    <img
+      id="backgroundImg2"
+      src="TwiceAsCleverChallenge3.png"
+      alt="Twice as Clever"
+    />
+    <canvas id="myCanvas2"></canvas>
+
+    <input
+      type="text"
+      id="seed"
+      name="seed"
+      value="Em2024"
+      onblur="changeSeed()"
+    />
+    
+    <script>
+      var img = new Image();
+      img.src = 'icons.png';
+      var imgArrX = [4, 44, 85, 127, 167, 209, 249, 287, 322, 360];
+      var noOfIcons = [];
+      
+      let randomGen = new Math.seedrandom(
+        document.getElementById("seed").value
+      );
+
+      function changeSeed() {
+        var seedLocal = document.getElementById("seed").value;
+        console.debug("Seed changed to: " + seedLocal);
+        randomGen = new Math.seedrandom(document.getElementById("seed").value);
+        Render();
+      }
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(randomGen() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+      }
+
+      function addIcon(iconIndex) {
+        if (noOfIcons[iconIndex] === undefined) {
+          noOfIcons[iconIndex] = 1;
+        } else {
+          noOfIcons[iconIndex]++;
+        }
+      }
+
+      function printIconX(ctx, index, iconIndex, destY, spacingX, spacingF) {
+        var sourceY = 0;
+        var sourceWidth = 28;
+        var sourceHeight = 28;
+        var destWidth = 20;
+        var destHeight = 20;
+
+        var sourceX = imgArrX[iconIndex-1];
+        var destX = index * (sourceWidth + spacingX) + spacingF;
+
+        ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        addIcon(iconIndex);
+      }
+
+      function printIconY(ctx, index, iconIndex, destX, spacingY, spacingF) {
+        var sourceY = 0;
+        var sourceWidth = 28;
+        var sourceHeight = 28;
+        var destWidth = 20;
+        var destHeight = 20;
+
+        var sourceX = imgArrX[iconIndex-1];
+        var destY = index * (sourceHeight + spacingY) + spacingF;
+
+        ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        addIcon(iconIndex);
+      }
+
+      const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(randomGen() * (i + 1));
+          const temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+      };
+
+      function printGreyIcons(context, arr) {
+        shuffleArray(arr);
+        for (let i = 0; i < 7; i++) {
+          printIconX(context, i, arr[i], 228, 2.5, 17)
+        }
+      }
+
+      function printBlueIcons(context, arr) {
+        shuffleArray(arr);
+        for (let i = 0; i < 12; i++) {
+          printIconX(context, i, arr[i], 462, 5.5, 32)
+        }
+      }
+
+      function printGreenIcons(context, arr) {
+        shuffleArray(arr);
+        for (let i = 0; i < 12; i++) {
+          printIconX(context, i, arr[i], 526, 5.5, 32)
+        }
+      }
+
+      function printPinkIcons(context, arr) {
+        shuffleArray(arr);
+        for (let i = 0; i < 12; i++) {
+          printIconX(context, i, arr[i], 582, 5.5, 32)
+        }
+      }
+
+      function printYellowIcons(context, arr) {
+        shuffleArray(arr);
+        for (let i = 0; i < 3; i++) {
+          printIconX(context, i, arr[i], 386, 8.5, 290)
+        }
+        for (let i = 3; i < 7; i++) {
+          printIconY(context, i, arr[i], 406, 8.4, 130)
+        }
+      }
+
+      function printTurnIcons(context, arr) {
+        shuffleArray(arr);
+        var backIcon = noOfIcons[1];
+        var reThrowIcon = noOfIcons[8];
+        var plusOneIcon = noOfIcons[4];
+        var noIcon = [noOfIcons[1], noOfIcons[8], noOfIcons[4]];
+        for (let i = 0; i < 3; i++) {
+          printIconY(context, i, arr[i], noIcon[i] * 35 + 162, -1.7, 118)
+        }
+        printIconY(context, 3, arr[3], 232, -1.6, 118)
+      }
+
+      function printGrey(context, arr, row, color) {
+        context.fillStyle = color;
+        shuffleArray(arr);
+        for (let i = 0; i < 7; i++) {
+          context.fillText(arr[i], 24 + i * 30, 284 + (row - 1) * 30);
+        }
+      }
+
+      function printYellow(context, arr) {
+        context.fillStyle = "black";
+        shuffleArray(arr);
+        for (let i = 0; i < 12; i++) {
+          context.fillText(
+            arr[i],
+            292 + (i % 3) * 37,
+            254 + Math.floor(i / 3) * 37
+          );
+        }
+      }
+
+      function printYellowCircles(context) {
+        var circles = [];
+        for (let i = 0; i < 4; i++) {
+          var number = getRandomInt(0, 11);
+          while (circles.includes(number)) {
+            number = getRandomInt(0, 11);
+          }
+          circles.push(number);
+        }
+        for (const circle of circles) {
+          context.beginPath();
+          context.arc(
+            298 + (circle % 3) * 37,
+            248 + Math.floor(circle / 3) * 37,
+            15,
+            0,
+            2 * Math.PI
+          );
+          context.lineWidth = 2;
+          context.strokeStyle = "black";
+          context.stroke();
+        }
+      }
+
+      function printGreen(context, arr, startPosX) {
+        context.font = "20px Arial";
+        context.fillStyle = "LightGray";
+        shuffleArray(arr);
+        for (let i = 0; i < arr.length; i++) {
+          context.fillText("x" + arr[i], startPosX + 33 + i * 2 * 33.5, 526);
+        }
+      }
+
+      function printPink(context, arr, startPos) {
+        context.font = "20px Arial";
+        context.fillStyle = "LightGray";
+        shuffleArray(arr);
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] !== 0) {
+            context.fillText("\u2265" + arr[i], startPos + 33 + i * 33, 580);
+          }
+        }
+      }
+
+      function printSeed(context) {
+        context.font = "14px Arial";
+        context.fillStyle = "DimGray";
+        context.fillText(
+          "Seed: " + document.getElementById("seed").value,
+          290,
+          18
+        );
+      }
+
+      function Render() {
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = 438;
+        canvas.height = 689;
+        var ctx = canvas.getContext("2d");
+        ctx.font = "30px Arial";
+
+        var canvas2 = document.getElementById("myCanvas2");
+        canvas2.width = 438;
+        canvas2.height = 689;
+        var ctx2 = canvas2.getContext("2d");
+        ctx2.font = "30px Arial";
+
+        var pinkNumbers = [2, 3, 4, 0, 5, 4, 3, 2, 0, 3, 4, 5];
+        printPink(ctx, pinkNumbers, 0);
+        printPink(ctx2, pinkNumbers, 0);
+
+        var greenNumbers = [4, 3, 3, 3, 2, 2];
+        printGreen(ctx, greenNumbers, 0);
+        printGreen(ctx2, greenNumbers, 0);
+        var greenNumbers = [2, 2, 2, 1, 1, 1];
+        printGreen(ctx, greenNumbers, 33);
+        printGreen(ctx2, greenNumbers, 33);
+
+        var yellowNumbers = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 7, 8, 8];
+        printYellow(ctx, yellowNumbers);
+        printYellowCircles(ctx);
+        printYellow(ctx2, yellowNumbers);
+        printYellowCircles(ctx2);
+
+        var greyNumbers = ["?", 1, 2, 3, 4, 5, 6, 7, 8];
+        printGrey(ctx, greyNumbers, 1, "DarkOrange");
+        printGrey(ctx, greyNumbers, 2, "blue");
+        printGrey(ctx, greyNumbers, 3, "green");
+        printGrey(ctx, greyNumbers, 4, "HotPink");
+        printGrey(ctx2, greyNumbers, 1, "DarkOrange");
+        printGrey(ctx2, greyNumbers, 2, "blue");
+        printGrey(ctx2, greyNumbers, 3, "green");
+        printGrey(ctx2, greyNumbers, 4, "HotPink");
+
+        var greyIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var blueIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
+        var greenIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
+        var pinkIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0];
+        var yellowIcons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var turnIcons = [2, 3, 5, 6, 7];
+
+        noOfIcons = [];
+        printGreyIcons(ctx, greyIcons);
+        printBlueIcons(ctx, blueIcons);
+        printGreenIcons(ctx, greenIcons);
+        printPinkIcons(ctx, pinkIcons);
+        printYellowIcons(ctx, yellowIcons);
+        printTurnIcons(ctx, turnIcons);
+
+        noOfIcons = [];
+        printGreyIcons(ctx2, greyIcons);
+        printBlueIcons(ctx2, blueIcons);
+        printGreenIcons(ctx2, greenIcons);
+        printPinkIcons(ctx2, pinkIcons);
+        printYellowIcons(ctx2, yellowIcons);
+        printTurnIcons(ctx2, turnIcons);
+
+        printSeed(ctx2);
+      }
+
+      window.onload = function() {
+        changeSeed();
+      }
+    </script>
+  </body>
+</html>
