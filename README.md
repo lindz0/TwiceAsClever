@@ -11,10 +11,10 @@ This repository provides a random score sheet generator for the popular roll-and
 ## Features
 
 - **4 Different Versions**: Choose from multiple sheet layouts and challenges
-  - Challenge 1: Single score sheet
-  - Challenge 2: Dual score sheets (two sheets side-by-side)
-  - Challenge 3: Alternative challenge layout
-  - Challenge 4: Advanced dual score sheet
+  - Challenge 1: (T6) Single score sheet
+  - Challenge 2: (T6) Dual score sheets (two sheets side-by-side)
+  - Challenge 3: (T6) Alternative challenge layout
+  - Challenge 4: (T8) Advanced dual score sheet
 - **Random Generation**: Each sheet is randomly generated with different numbers
 - **Reproducible**: Use seed strings to generate the same sheet again
 - **Print-Ready**: Generate and print score sheets for your games
