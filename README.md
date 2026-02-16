@@ -6,7 +6,7 @@ A web-based score sheet generator for the board game **Twice as Clever** (Doppel
 
 ## About
 
-This repository provides a random score sheet generator for the popular roll-and-write board game "Twice as Clever". Each generated sheet uses deterministic randomization based on a seed string, allowing you to create unique, reproducible score sheets for your gaming sessions.
+This repository provides a random score sheet generator for the popular roll-and-write board game **Twice as Clever**. Each generated sheet uses deterministic randomization based on a seed string, allowing you to create unique, reproducible score sheets for your gaming sessions.
 
 ## Features
 
@@ -30,6 +30,6 @@ This repository provides a random score sheet generator for the popular roll-and
 ## What This Repo Is For
 
 This repository hosts the static HTML/JavaScript files that power the score sheet generator. It's designed to help board game enthusiasts:
-- Generate custom score sheets for Twice as Clever
+- Generate custom score sheets for **Twice as Clever**
 - Create unique gaming experiences with randomized layouts
 - Avoid repetition by generating fresh sheets for each game session
