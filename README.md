@@ -2,7 +2,7 @@
 
 A web-based score sheet generator for the board game **Twice as Clever** (Doppelt So Clever).
 
-**[Play Now on GitHub Pages](https://lindz0.github.io/TwiceAsClever/)**
+**[Create sheets now on GitHub Pages](https://lindz0.github.io/TwiceAsClever/)**
 
 ![TwiceAsClever Score Sheet](TwiceAsClever.png)
 
